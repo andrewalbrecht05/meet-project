@@ -1,12 +1,18 @@
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 
-public class Myserver implements Runnable{
-    private Socket socket;
-    public Myserver(Socket socket){
-        this.socket = socket;
-    }
+public class Myserver implements HttpHandler {
     @Override
-    public void run(){
-        System.out.println("hello user");
+    public void handle(HttpExchange exchange) throws IOException {
+        String response = "Hello, World!";
+        exchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
+
 }
