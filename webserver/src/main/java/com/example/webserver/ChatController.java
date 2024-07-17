@@ -1,4 +1,4 @@
-/package com.example.webserver;
+package com.example.webserver;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
