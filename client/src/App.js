@@ -6,7 +6,8 @@ import SockJS from 'sockjs-client';
 function App() {
     const [messages, setMessages] = useState([]);
     const stompClientRef = useRef(null);
-
+    //const roomId = useRef(Math.floor(Math.random() * 100));
+    const roomId = useRef(69);
     useEffect(() => {
         connect();
 
@@ -24,8 +25,9 @@ function App() {
             debug: (str) => { console.log(str); },
             onConnect: (frame) => {
                 console.log('Connected: ' + frame);
-                client.subscribe('/topic/messages', (message) => {
+                client.subscribe(`/topic/messages/${roomId.current}`, (message) => {
                     const newMessage = JSON.parse(message.body).content;
+                    console.log(newMessage);
                     setMessages(prevMessages => [...prevMessages, newMessage]);
                 });
             },
@@ -45,7 +47,7 @@ function App() {
                 destination: "/app/message",
                 body: JSON.stringify({
                     'content': message,
-                    'roomId': 123
+                    'roomId': roomId.current
                 })
             });
             document.getElementById('message').value = '';
@@ -56,6 +58,7 @@ function App() {
         <div className="App">
             <div>
                 <input id="message" type="text" placeholder="Type a message"/>
+                <input id="roomId" type="text" placeholder="Type your room id"/>
                 <button onClick={sendMessage}>Send</button>
                 <div id="messages">
                     {messages.map((msg, index) => (

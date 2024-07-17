@@ -26,5 +26,6 @@ public class ChatController {
 
         // Відправляємо повідомлення до динамічної теми, що відповідає roomId
         messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new ChatMessage(escapedContent, message.getRoomId()));
+        //System.out.println("Sent message: " + message.getContent());
     }
 }
