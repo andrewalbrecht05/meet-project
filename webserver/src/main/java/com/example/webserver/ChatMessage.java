@@ -1,5 +1,17 @@
 package com.example.webserver;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = StringMessage.class, name = "string"),
+        @JsonSubTypes.Type(value = AudioMessage.class, name = "audio")
+})
 public abstract class  ChatMessage {
     private String roomId;
     private String type;
