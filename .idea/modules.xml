@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/meet-project.iml" filepath="$PROJECT_DIR$/.idea/meet-project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/meet.iml" filepath="$PROJECT_DIR$/.idea/meet.iml" />
     </modules>
   </component>
 </project>

@@ -1,22 +1,12 @@
 package com.example.webserver;
 
-public class ChatMessage {
-    private String content;
+public abstract class  ChatMessage {
     private String roomId;
 
     public ChatMessage() {}
 
-    public ChatMessage(String content, String roomId) {
-        this.content = content;
+    public ChatMessage(String roomId) {
         this.roomId = roomId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getRoomId() {
@@ -26,4 +16,6 @@ public class ChatMessage {
     public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
+    public abstract String getContent();
+    public abstract void setContent(String content);
 }
