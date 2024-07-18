@@ -1,9 +1,4 @@
 .App {
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: end;
 }
 
 .message {
@@ -14,14 +9,19 @@
     border: 1px solid #023020;
     align-items: center;
     padding: 10px;
+    width: 250px;
+    background: #FAFAFA;
+    position: absolute;
+    top: 90%;
+    left: 40%;
 }
 
 #message__field {
     outline: none;
     border: none;
-    background: #FAFAFA;
     border-radius: 10px;
     color: 	#36454F;
+    background: #FAFAFA;
 }
 
 #message__button {
@@ -35,8 +35,14 @@
 #message__icon {
     color: #023020;
     transition: zoom 1s;
+    box-sizing: border-box;
 }
 
 #message__icon:hover {
     zoom: 110%;
+}
+
+#messages {
+    width: 50%;
+    margin: 20px auto 0;
 }

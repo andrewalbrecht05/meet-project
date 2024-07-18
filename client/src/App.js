@@ -3,6 +3,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {Client} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { IoSend } from "react-icons/io5";
+import ChatMessage from "./ChatMessage/ChatMessage";
+import * as moment from 'moment';
 
 function App() {
     const [messages, setMessages] = useState([]);
@@ -10,6 +12,7 @@ function App() {
     const stompClientRef = useRef(null);
     //const roomId = useRef(Math.floor(Math.random() * 100));
     const roomId = useRef(69);
+
     useEffect(() => {
         connect();
         return () => {
@@ -43,8 +46,13 @@ function App() {
             onConnect: (frame) => {
                 console.log('Connected: ' + frame);
                 client.subscribe(`/topic/messages/${roomId.current}`, (message) => {
-                    const newMessage = JSON.parse(message.body).content;
-                    console.log(newMessage);
+                    const newMessage = {
+                        'text': JSON.parse(message.body).content,
+                        'timestamp': moment().format('h:mm:ss a'),
+                        'username': nameInputRef.current, // change from server
+                    };
+
+                    console.log(message.body);
                     setMessages(prevMessages => [...prevMessages, newMessage]);
                 });
             },
@@ -63,6 +71,8 @@ function App() {
             stompClientRef.current.publish({
                 destination: "/app/message",
                 body: JSON.stringify({
+                    'type': "string",
+                    'username': nameInputRef.current,
                     'content': message,
                     'roomId': roomId.current
                 })
@@ -73,14 +83,14 @@ function App() {
 
     return (
         <div className="App">
+            <div id="messages">
+                {messages.map((msg, index) => (
+                    <ChatMessage key={index} sender={msg.username} message={msg.text} timestamp={msg.timestamp} isMyMessage={msg.username === nameInputRef.current} />
+                ))}
+            </div>
             <div className="message">
                 <input id="message__field" type="text" placeholder="Type a message"/>
                 <IoSend id="message__icon"/>
-            </div>
-            <div id="messages">
-                {messages.map((msg, index) => (
-                    <div key={index}>{msg}</div>
-                ))}
             </div>
         </div>
     );
