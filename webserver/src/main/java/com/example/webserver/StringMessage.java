@@ -6,7 +6,7 @@ public class StringMessage extends ChatMessage{
     public StringMessage() {}
 
     public StringMessage(String content, String roomId) {
-        super(roomId);
+        super(roomId,"string");
         this.content = content;
     }
     @Override

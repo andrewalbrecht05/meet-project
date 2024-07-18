@@ -6,7 +6,7 @@ public class AudioMessage extends ChatMessage{
     public AudioMessage() {}
 
     public AudioMessage(String content, String roomId) {
-        super(roomId);
+        super(roomId,"audio");
         this.content = content;
     }
     @Override
