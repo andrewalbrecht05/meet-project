@@ -5,8 +5,8 @@ public class StringMessage extends ChatMessage{
 
     public StringMessage() {}
 
-    public StringMessage(String content, String roomId) {
-        super(roomId,"string");
+    public StringMessage(String content, String roomId, String username) {
+        super(roomId,"string", username);
         this.content = content;
     }
     @Override
@@ -16,5 +16,9 @@ public class StringMessage extends ChatMessage{
     @Override
     public void setContent(String content) {
         this.content = content;
+    }
+    @Override
+    public String getUsername(){
+        return this.username;
     }
 }

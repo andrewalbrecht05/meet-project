@@ -5,8 +5,8 @@ public class AudioMessage extends ChatMessage{
 
     public AudioMessage() {}
 
-    public AudioMessage(String content, String roomId) {
-        super(roomId,"audio");
+    public AudioMessage(String content, String roomId,String username) {
+        super(roomId,"audio",username);
         this.content = content;
     }
     @Override
@@ -16,6 +16,10 @@ public class AudioMessage extends ChatMessage{
     @Override
     public void setContent(String content){
         this.content = content;
+    }
+    @Override
+    public String getUsername(){
+        return this.username;
     }
 
 

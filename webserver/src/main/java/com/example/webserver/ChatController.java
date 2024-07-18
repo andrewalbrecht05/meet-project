@@ -36,7 +36,7 @@ public class ChatController {
         if ("string".equals(message.getMessageType())) {
             StringMessage stringMessage = (StringMessage) message;
             String escapedContent = HtmlUtils.htmlEscape(stringMessage.getContent());
-            messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new StringMessage(escapedContent, message.getRoomId()));
+            messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new StringMessage(escapedContent, message.getRoomId(), message.getUsername()));
         } else if ("audio".equals(message.getMessageType())) {
             AudioMessage voiceMessage = (AudioMessage) message;
             // Обробка голосового повідомлення, наприклад, збереження або передача іншим користувачам

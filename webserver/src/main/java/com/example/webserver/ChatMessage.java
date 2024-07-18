@@ -3,9 +3,12 @@ package com.example.webserver;
 public abstract class  ChatMessage {
     private String roomId;
     private String type;
+    String username;
+    String userID;
     public ChatMessage() {}
 
-    public ChatMessage(String roomId,String type) {
+
+    public ChatMessage(String roomId,String type, String username) {
         this.roomId = roomId;
         this.type = type;
     }
@@ -22,4 +25,5 @@ public abstract class  ChatMessage {
     public String getMessageType(){
         return this.type;
     }
+    public abstract String getUsername();
 }
