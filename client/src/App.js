@@ -1,28 +1,45 @@
 import './App.css';
-import { useEffect, useRef, useState } from "react";
-import { Client } from '@stomp/stompjs';
+import React, {useEffect, useRef, useState} from "react";
+import {Client} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { IoSend } from "react-icons/io5";
 
 function App() {
     const [messages, setMessages] = useState([]);
+    let nameInputRef = useRef(null);
     const stompClientRef = useRef(null);
     //const roomId = useRef(Math.floor(Math.random() * 100));
     const roomId = useRef(69);
     useEffect(() => {
         connect();
-
         return () => {
+            if (!nameInputRef.current)
+              nameInputRef.current = prompt("Enter your name:");
+
+            let messageIcon = document.getElementById("message__icon");
+            document.addEventListener("keypress", (e) => {
+                console.log(e.key);
+                if (e.key === "Enter") {
+                    sendMessage();
+                }
+            });
+            messageIcon.addEventListener("click", (e) => {
+                sendMessage();
+            });
             if (stompClientRef.current) {
                 stompClientRef.current.deactivate();
             }
         };
     }, []);
 
+
     function connect() {
         const socket = new SockJS('http://localhost:8080/ws');
         const client = new Client({
             webSocketFactory: () => socket,
-            debug: (str) => { console.log(str); },
+            debug: (str) => {
+                console.log(str);
+            },
             onConnect: (frame) => {
                 console.log('Connected: ' + frame);
                 client.subscribe(`/topic/messages/${roomId.current}`, (message) => {
@@ -42,7 +59,7 @@ function App() {
 
     function sendMessage() {
         if (stompClientRef.current) {
-            const message = document.getElementById('message').value;
+            const message = document.getElementById('message__field').value;
             stompClientRef.current.publish({
                 destination: "/app/message",
                 body: JSON.stringify({
@@ -50,21 +67,20 @@ function App() {
                     'roomId': roomId.current
                 })
             });
-            document.getElementById('message').value = '';
+            document.getElementById('message__field').value = '';
         }
     }
 
     return (
         <div className="App">
-            <div>
-                <input id="message" type="text" placeholder="Type a message"/>
-                <input id="roomId" type="text" placeholder="Type your room id"/>
-                <button onClick={sendMessage}>Send</button>
-                <div id="messages">
-                    {messages.map((msg, index) => (
-                        <div key={index}>{msg}</div>
-                    ))}
-                </div>
+            <div className="message">
+                <input id="message__field" type="text" placeholder="Type a message"/>
+                <IoSend id="message__icon"/>
+            </div>
+            <div id="messages">
+                {messages.map((msg, index) => (
+                    <div key={index}>{msg}</div>
+                ))}
             </div>
         </div>
     );
