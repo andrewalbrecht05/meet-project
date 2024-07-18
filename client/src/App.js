@@ -49,7 +49,7 @@ function App() {
                     const newMessage = {
                         'text': JSON.parse(message.body).content,
                         'timestamp': moment().format('h:mm:ss a'),
-                        'username': nameInputRef.current, // change from server
+                        'username': JSON.parse(message.body).username, // change from server
                     };
 
                     console.log(message.body);
@@ -68,6 +68,7 @@ function App() {
     function sendMessage() {
         if (stompClientRef.current) {
             const message = document.getElementById('message__field').value;
+            console.log(nameInputRef.current);
             stompClientRef.current.publish({
                 destination: "/app/message",
                 body: JSON.stringify({

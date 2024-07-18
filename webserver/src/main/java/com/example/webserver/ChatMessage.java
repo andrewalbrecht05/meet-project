@@ -23,6 +23,7 @@ public abstract class  ChatMessage {
     public ChatMessage(String roomId,String type, String username) {
         this.roomId = roomId;
         this.type = type;
+        this.username = username;
     }
 
     public String getRoomId() {
