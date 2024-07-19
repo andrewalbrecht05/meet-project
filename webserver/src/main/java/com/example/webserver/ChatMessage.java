@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = AudioMessage.class, name = "audio")
 })
 public abstract class  ChatMessage {
+
+    //темпорари
     private String roomId;
     private String type;
     String username;
@@ -23,6 +25,7 @@ public abstract class  ChatMessage {
     public ChatMessage(String roomId,String type, String username) {
         this.roomId = roomId;
         this.type = type;
+        this.username = username;
     }
 
     public String getRoomId() {
