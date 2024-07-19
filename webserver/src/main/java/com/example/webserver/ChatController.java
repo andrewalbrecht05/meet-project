@@ -5,22 +5,23 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
-    //private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
 
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
+    public ChatController(SimpMessagingTemplate messagingTemplate, ObjectMapper objectMapper) {
         this.messagingTemplate = messagingTemplate;
-        //this.objectMapper = objectMapper;
+        this.objectMapper = objectMapper;
     }
 
     @MessageMapping("/message")
-    public void sendMessage(ChatMessage message, SimpMessageHeaderAccessor headerAccessor) throws Exception {
+    public void sendMessage(@RequestBody String messageJson, SimpMessageHeaderAccessor headerAccessor) throws Exception {
         /*// Додаємо ідентифікатор кімнати до заголовків, якщо потрібно
         headerAccessor.getSessionAttributes().put("roomId", message.getRoomId());
 
@@ -31,6 +32,7 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new ChatMessage(escapedContent, message.getRoomId()));
         //System.out.println("Sent message: " + message.getContent());
          */
+        ChatMessage message = objectMapper.readValue(messageJson, ChatMessage.class);
         headerAccessor.getSessionAttributes().put("roomId", message.getRoomId());
 
         if ("string".equals(message.getMessageType())) {
