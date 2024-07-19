@@ -32,12 +32,12 @@ public class ChatController {
         //System.out.println("Sent message: " + message.getContent());
          */
         headerAccessor.getSessionAttributes().put("roomId", message.getRoomId());
-
-        if ("string".equals(message.getMessageType())) {
+        System.out.println(message.getType());
+        if ("string".equals(message.getType())) {
             StringMessage stringMessage = (StringMessage) message;
             String escapedContent = HtmlUtils.htmlEscape(stringMessage.getContent());
-            messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new StringMessage(escapedContent, message.getRoomId(), message.getUsername()));
-        } else if ("audio".equals(message.getMessageType())) {
+            messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), new StringMessage(escapedContent, message.getRoomId(), message.getUsername(),"string"));
+        } else if ("audio".equals(message.getType())) {
             AudioMessage voiceMessage = (AudioMessage) message;
             // Обробка голосового повідомлення, наприклад, збереження або передача іншим користувачам
             messagingTemplate.convertAndSend("/topic/messages/" + message.getRoomId(), voiceMessage);

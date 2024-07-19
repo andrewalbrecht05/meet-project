@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public abstract class  ChatMessage {
     private String roomId;
-    private String type;
+    String type;
     String username;
     String userID;
     public ChatMessage() {}
@@ -35,7 +35,7 @@ public abstract class  ChatMessage {
     }
     public abstract String getContent();
     public abstract void setContent(String content);
-    public String getMessageType(){
+    public String getType(){
         return this.type;
     }
     public abstract String getUsername();
